@@ -21,3 +21,17 @@ def cria_baralho():
         cartas.append(d)
 
     return (cartas)
+
+def extrai_naipe(carta):
+
+    if "♦" in carta:
+        return "♦"
+    
+    if "♥" in carta:
+        return "♥"
+    
+    if "♣" in carta:
+        return "♣"
+    
+    if "♠" in carta:
+        return "♠"
