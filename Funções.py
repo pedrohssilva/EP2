@@ -106,3 +106,13 @@ def lista_movimentos_possiveis (baralho, indice):
             possiveis_movimentos.append(3)
     
     return possiveis_movimentos
+
+def empilha(lista_cartas, origem, destino):
+
+    carta_muda = lista_cartas[origem]
+
+    del lista_cartas[origem]
+
+    lista_cartas[destino] = carta_muda
+
+    return lista_cartas
