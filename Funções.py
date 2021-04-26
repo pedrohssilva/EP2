@@ -116,3 +116,15 @@ def empilha(lista_cartas, origem, destino):
     lista_cartas[destino] = carta_muda
 
     return lista_cartas
+
+def possui_movimentos_possiveis(lista_cartas):
+    numero_cartas = len(lista_cartas)
+
+    for indice in range(numero_cartas):
+        print(indice)
+        possiveis_movimentos = lista_movimentos_possiveis(lista_cartas, indice)
+
+        if len(possiveis_movimentos) != 0:
+            return True
+    else:
+        return False
