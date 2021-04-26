@@ -2,11 +2,8 @@
 DesSoft
 
 def cria_baralho():
-
     lista = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-
     cartas = []
-
     for elemento in lista:
         a = elemento + "♠"
         cartas.append(a)
@@ -76,3 +73,36 @@ def extrai_valor(carta):
 
     if "K" in carta:
         return "K"
+    
+def lista_movimentos_possiveis (baralho, indice):
+
+    possiveis_movimentos = []
+
+    if indice == 0:
+        return []
+
+    naipe = extrai_naipe(baralho[indice])
+
+    if (indice-1) >= 0:
+        naipe1 = extrai_naipe(baralho[indice-1])
+        if naipe == naipe1:
+            possiveis_movimentos.append(1)
+
+    if (indice-3) >= 0:
+        naipe3 = extrai_naipe(baralho[indice-3])
+        if naipe == naipe3:
+            possiveis_movimentos.append(3)
+
+    numero = extrai_valor(baralho[indice])
+    
+    if (indice-1) >= 0:
+        numero1 = extrai_valor(baralho[indice-1])
+        if numero == numero1:
+            possiveis_movimentos.append(1)
+    
+    if (indice-3) >= 0:
+        numero3 = extrai_valor(baralho[indice-3])
+        if numero == numero3:
+            possiveis_movimentos.append(3)
+    
+    return possiveis_movimentos
