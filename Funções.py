@@ -128,3 +128,5 @@ def possui_movimentos_possiveis(lista_cartas):
             return True
     else:
         return False
+
+print(2)
