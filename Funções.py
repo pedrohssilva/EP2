@@ -1,5 +1,7 @@
 # EP2
-DesSoft
+# DesSoft
+
+import random
 
 def cria_baralho():
     lista = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -76,7 +78,7 @@ def empilha(lista_cartas, origem, destino):
 
     return lista_cartas
 
-def possui_movimentos_possiveis(lista_cartas):
+def possui_movimentos_possiveis(lista_cartas): #ultima coisa da sequencia
     numero_cartas = len(lista_cartas)
 
     for indice in range(numero_cartas):
@@ -88,4 +90,78 @@ def possui_movimentos_possiveis(lista_cartas):
     else:
         return False
 
-print(2)
+
+print('Paciência Acordeão')
+print('==================') 
+print('')
+print('Seja bem-vindo(a) ao jogo de Paciência Acordeão! O objetivo deste jogo é colocar todas as cartas em uma mesma pilha.')
+print('')
+print('Existem apenas dois movimentos possíveis:') 
+print('')
+print('1. Empilhar uma carta sobre a carta imediatamente anterior;') 
+print('2. Empilhar uma carta sobre a terceira carta anterior. ')
+print('')
+print('Para que um movimento possa ser realizado basta que uma das duas condições abaixo seja atendida: ')
+print('')
+print('1. As duas cartas possuem o mesmo valor ou') 
+print('2. As duas cartas possuem o mesmo naipe.')
+print('')
+print('Desde que alguma das condições acima seja satisfeita, qualquer carta pode ser movimentada. ')
+print('')
+a = input('Aperte [Enter] para iniciar o jogo...')
+
+cartas = cria_baralho()
+random.shuffle(cartas)
+numero_cartas = len(cartas)
+print('')
+print('O estado atual do baralho é:')
+i = 0
+for numero in range(1, numero_cartas+1):
+    print("{0}. {1}". format(numero, cartas[i]))
+    i += 1
+print('')
+
+
+while numero_cartas>1:
+    escolheu_certo = True
+    while escolheu_certo:
+        carta_escolhida = int(input('Escolha uma carta (digite um número entre 1 e {0}): '.format(numero_cartas)))
+
+        ''' digitou_certo = True
+        while digitou_certo: 
+            if not a.isdigit():
+                carta_escolhida = input('Posição inválida. Por favor, digite um número entre 1 e {0}): '.format(numero_cartas))
+            carta_escolhida = int(carta_escolhida)
+            if carta_escolhida<1 or carta_escolhida>len(cartas):
+                carta_escolhida = input('Posição inválida. Por favor, digite um número entre 1 e {0}): '.format(numero_cartas))
+            else:
+                digitou_certo = False '''
+
+        tem_movimento = lista_movimentos_possiveis(cartas, carta_escolhida-1)
+
+        print(tem_movimento)
+        print('pritando tem_movimento')
+
+        if len(tem_movimento) == 1:
+            empilha(cartas, carta_escolhida, tem_movimento[0])
+            escolheu_certo = False
+        if len(tem_movimento) == 0:
+            carta_escolhida = input('A carta {0} não pode ser movida. Por favor, digite um número entre 1 e 45'.format(cartas[carta_escolhida-1]))  
+        if len(tem_movimento) == 2:
+            print('1. {0}'. format(cartas[carta_escolhida-4]))
+            print('2. {0}'. format(cartas[carta_escolhida-1]))
+            carta_baixo = input('Sobre qual carta você quer empilhar o {0}? '.format(cartas[carta_escolhida-1]))
+            if carta_baixo == 1:
+                empilha(cartas, carta_escolhida-5, tem_movimento[0])
+                escolheu_certo = False
+            else:
+                empilha(cartas, carta_escolhida-2, tem_movimento[1])
+                escolheu_certo = False
+        
+    numero_cartas = len(cartas)
+    print('')
+    print('O estado atual do baralho é:')
+    i = 0
+    for numero in range(1, numero_cartas+1):
+        print("{0}. {1}". format(numero, cartas[i]))
+        i += 1
