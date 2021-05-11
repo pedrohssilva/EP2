@@ -74,6 +74,17 @@ def possui_movimentos_possiveis(lista_cartas):
     else:
         return False
 
+def colorindo_baralho(i):
+    if extrai_naipe(i) == '♥':
+        return (('\033[1;34m{0}\033[m').format(i))
+    elif extrai_naipe(i) == '♦':
+        return (('\033[1;31m{0}\033[m').format(i))
+    elif extrai_naipe(i) == '♠':
+        return (('\033[1;35m{0}\033[m').format(i))
+    elif extrai_naipe(i) == '♣':
+        return (('\033[1;92m{0}\033[m').format(i))
+
+
 print('')
 print('')
 print('')
@@ -107,7 +118,7 @@ print('')
 print('O estado atual do baralho é:')
 i = 0
 for numero in range(1, numero_cartas+1):
-    print("{0}. {1}". format(numero, cartas[i]))
+    print("{0}. {1}". format(numero, colorindo_baralho(cartas[i])))
     i += 1
 print('')
 
@@ -116,16 +127,14 @@ while quer_jogar:
     while numero_cartas>1:
         escolheu_certo = True
         while escolheu_certo:
-            carta_escolhida = int(input('Escolha uma carta (digite um número entre 1 e {0}): '.format(numero_cartas)))
-            ''' digitou_certo = True
-            while digitou_certo: 
-                if not a.isdigit():
-                    carta_escolhida = input('Posição inválida. Por favor, digite um número entre 1 e {0}): '.format(numero_cartas))
-                carta_escolhida = int(carta_escolhida)
-                if carta_escolhida<1 or carta_escolhida>len(cartas):
-                    carta_escolhida = input('Posição inválida. Por favor, digite um número entre 1 e {0}): '.format(numero_cartas))
-                else:
-                    digitou_certo = False '''
+            numero_cartas = len(cartas)
+            carta_escolhida = input('Escolha uma carta (digite um número entre 1 e {0}): '.format(numero_cartas))
+            
+            while carta_escolhida.isnumeric() == False or int(carta_escolhida) > numero_cartas or int(carta_escolhida) < 1:
+                carta_escolhida = input('Você digitou um termo inválido. Escolha uma carta (digite um número entre 1 e {0}): '.format(numero_cartas))
+
+            carta_escolhida = int(carta_escolhida)
+            
 
             tem_movimento = lista_movimentos_possiveis(cartas, carta_escolhida-1)
 
@@ -135,12 +144,14 @@ while quer_jogar:
                 if tem_movimento[0] == 3:
                     empilha(cartas, carta_escolhida-1, carta_escolhida-4)
                 escolheu_certo = False
+
             if len(tem_movimento) == 0:
-                print('A carta {0} não pode ser movida. Por favor, digite um número entre 1 e {1}'.format(cartas[carta_escolhida-1], numero_cartas))  
+                print('A carta {0} não pode ser movida. Por favor, digite um número entre 1 e {1}'.format(colorindo_baralho(cartas[carta_escolhida-1]), numero_cartas))  
+            
             if len(tem_movimento) == 2:
-                print('1. {0}'. format(cartas[carta_escolhida-4]))
-                print('2. {0}'. format(cartas[carta_escolhida-2]))
-                carta_baixo = int(input('Sobre qual carta você quer empilhar o {0}? '.format(cartas[carta_escolhida-1])))
+                print('1. {0}'. format(colorindo_baralho(cartas[carta_escolhida-4])))
+                print('2. {0}'. format(colorindo_baralho(cartas[carta_escolhida-2])))
+                carta_baixo = int(input('Sobre qual carta você quer empilhar o {0}? '.format(colorindo_baralho(cartas[carta_escolhida-1]))))
                 if carta_baixo == 1:
                     empilha(cartas, carta_escolhida-1, carta_escolhida - 4)
                     escolheu_certo = False
@@ -160,15 +171,30 @@ while quer_jogar:
             print('O estado atual do baralho é:')
             i = 0
             for numero in range(1, numero_cartas+1):
-                print("{0}. {1}". format(numero, cartas[i]))
+                print("{0}. {1}". format(numero, colorindo_baralho(cartas[i])))
                 i += 1 
             
     if numero_cartas == 1:    
         print('Parabéns você ganhou!')
 
     print('')
-    jogar_novamente = input('Se quiser jogar novamente, digite "sim": ')
+    jogar_novamente = input('Se quiser jogar novamente, digite sim: ')
+
     if jogar_novamente == 'sim':
+
         quer_jogar = True
+        escolheu_certo = False
+
+        cartas = cria_baralho()
+        random.shuffle(cartas)
+        numero_cartas = len(cartas)
+        print('')
+        print('O estado atual do baralho é:')
+        i = 0
+        for numero in range(1, numero_cartas+1):
+            print("{0}. {1}". format(numero, colorindo_baralho(cartas[i])))
+            i += 1
+        print('')
+
     else:
         quer_jogar = False
